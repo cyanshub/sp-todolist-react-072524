@@ -1,11 +1,12 @@
+import './App.scss';
+import { TodoPage, LoginPage, SignUpPage } from './pages';
+
 function App() {
-
-
   return (
-    <>
-      <div>Heiil World</div>
-    </>
-  )
+    <div className="app">
+      <TodoPage />
+    </div>
+  );
 }
 
-export default App
+export default App;
