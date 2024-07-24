@@ -54,6 +54,29 @@ const TodoPage = () => {
     setInputValue('');
   };
 
+  const handleKeyDown = () => {
+    // 當按下 Enter 鍵時, 要新增資料, 所以可以直接參考 handleAddTodo
+    // 檢查 inputValue
+    if (inputValue.length === 0) {
+      return;
+    }
+
+    // 儲存 todo 資料
+    setTodos((prevTodos) => {
+      return [
+        ...prevTodos,
+        {
+          id: Math.random() * 100,
+          title: inputValue,
+          isDone: false,
+        },
+      ];
+    });
+
+    // 完成後清空 inputValue
+    setInputValue('');
+  };
+
   return (
     <div>
       TodoPage
@@ -62,6 +85,7 @@ const TodoPage = () => {
         inputValue={inputValue}
         onChange={handleChange}
         onAddTodo={handleAddTodo}
+        onKeyDown={handleKeyDown}
       />
       <TodoCollection todos={todos} />
       <Footer />
