@@ -77,11 +77,15 @@ const TodoInput = ({ inputValue, onChange, onKeyDown, onAddTodo }) => {
           type="text"
           placeholder="新增工作"
           value={inputValue}
-          onChange={(e) => {onChange?.(e.target.value)}}
+          onChange={(event) => {
+            onChange?.(event.target.value);
+          }}          
         />
       </StyledInputContainer>
       <StyledAddTodoActionContainer>
-        <button className="btn-reset">新增</button>
+        <button className="btn-reset" onClick={() => onAddTodo?.()}>
+          新增
+        </button>
       </StyledAddTodoActionContainer>
     </StyledAddTodoContainer>
   );
