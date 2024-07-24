@@ -10,12 +10,15 @@ const TodoCollection = ({
   return (
     <div>
       {/* 拿到陣列資料後, 用迴圈取出及渲染 */}
-      {todos.map(todo => {
+      {todos.map((todo) => {
         return (
-          <TodoItem key={todo.id} todo={todo} />
-        )
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            onToggleDone={(id) => onToggleDone?.(id)}
+          />
+        );
       })}
-
     </div>
   );
 };
