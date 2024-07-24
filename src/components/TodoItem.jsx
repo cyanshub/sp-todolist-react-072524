@@ -5,6 +5,7 @@ import {
   CheckCircleIcon,
   CheckHoverIcon,
 } from '@/assets/images';
+import { useRef } from 'react';
 
 const StyledTaskItem = styled.div`
   min-height: 52px;
@@ -101,9 +102,26 @@ const StyledTaskItem = styled.div`
   }
 `;
 
+// todo.isEdit
 const TodoItem = ({ todo, onToggleDone, onSave, onDelete, onChangeMode }) => {
+  const inputRef = useRef(null);
+  const handleKeyDown = (event) => {
+    // 進入編輯模式的 input 輸入控制項後, key 鍵可能是 Enter 或 ESC
+    // 只有當輸入控制項有值時, 才觸發回調函數
+    if (inputRef.current.value.length > 0 && event.key === 'Enter') {
+      // 觸發回調函數, 其中透過 inputRef 取得當前 input 控制項的值
+      onSave?.({ id: todo.id, title: inputRef.current.value });
+    }
+
+    if (event.key === 'Escape') {
+      onChangeMode?.({ id: todo.id, isEdit: false });
+    }
+  };
+
   return (
-    <StyledTaskItem className={clsx('', { done: todo.isDone })}>
+    <StyledTaskItem
+      className={clsx('', { done: todo.isDone, edit: todo.isEdit })}
+    >
       <div className="task-item-checked">
         <span
           className="icon icon-checked"
@@ -112,9 +130,17 @@ const TodoItem = ({ todo, onToggleDone, onSave, onDelete, onChangeMode }) => {
           }}
         />
       </div>
-      <div className="task-item-body">
+      <div
+        className="task-item-body"
+        onDoubleClick={() => onChangeMode?.({ id: todo.id, isEdit: true })}
+      >
         <span className="task-item-body-text">{todo.title}</span>
-        <input className="task-item-body-input" />
+        <input
+          ref={inputRef}
+          className="task-item-body-input"
+          defaultValue={todo.title}
+          onKeyDown={handleKeyDown}
+        />
       </div>
       <div className="task-item-action ">
         <button className="btn-reset btn-destroy icon"></button>
