@@ -142,10 +142,18 @@ const TodoPage = () => {
     }
   };
 
-  const handleDelete = (id) => {
-    setTodos((preVTodos) => {
-      return preVTodos.filter((todo) => todo.id !== id);
-    });
+  const handleDelete = async (id) => {
+    try {
+      // 向後端發送請求, 使後端刪除資料
+      await todoController.deleteTodo(id);
+
+      // 在前端顯示刪除後的資料
+      setTodos((preVTodos) => {
+        return preVTodos.filter((todo) => todo.id !== id);
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // 使用 React Hook: useEffect 工具, 其可在每次畫面渲染時, 向後端拿資料

@@ -29,11 +29,6 @@
       "title": "Learn something",
       "isDone": false,
       "id": 6
-    },
-    {
-      "title": "Organize notes about React",
-      "isDone": true,
-      "id": 7
     }
   ]
 }
