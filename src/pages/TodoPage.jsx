@@ -2,7 +2,6 @@ import { Footer, Header, TodoCollection, TodoInput } from '@/components';
 import { useEffect, useState } from 'react';
 import { todoController } from '../apis/todo';
 
-
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [todos, setTodos] = useState([]);
@@ -11,49 +10,71 @@ const TodoPage = () => {
     setInputValue(value);
   };
 
-  const handleAddTodo = () => {
+  const handleAddTodo = async () => {
     // 檢查 inputValue
     if (inputValue.length === 0) {
       return;
     }
 
-    // 儲存 todo 資料
-    setTodos((prevTodos) => {
-      return [
-        ...prevTodos,
-        {
-          id: Math.random() * 100,
-          title: inputValue,
-          isDone: false,
-        },
-      ];
-    });
+    try {
+      // 向後端拿資料
+      const data = await todoController.createTodo({
+        title: inputValue,
+        isDone: false,
+      });
 
-    // 完成後清空 inputValue
-    setInputValue('');
+      // 儲存 todo 資料
+      setTodos((prevTodos) => {
+        return [
+          ...prevTodos,
+          {
+            id: data.id,
+            title: data.title,
+            isDone: data.isDone,
+            isEdit: false,
+          },
+        ];
+      });
+
+      // 完成後清空 inputValue
+      setInputValue('');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const handleKeyDown = () => {
+  const handleKeyDown = async () => {
     // 當按下 Enter 鍵時, 要新增資料, 所以可以直接參考 handleAddTodo
     // 檢查 inputValue
     if (inputValue.length === 0) {
       return;
     }
 
-    // 儲存 todo 資料
-    setTodos((prevTodos) => {
-      return [
-        ...prevTodos,
-        {
-          id: Math.random() * 100,
-          title: inputValue,
-          isDone: false,
-        },
-      ];
-    });
+    try {
+      // 向後端拿資料
+      const data = await todoController.createTodo({
+        title: inputValue,
+        isDone: false,
+      });
 
-    // 完成後清空 inputValue
-    setInputValue('');
+      // 儲存 todo 資料
+      setTodos((prevTodos) => {
+        return [
+          ...prevTodos,
+          {
+            id: data.id,
+            title: data.title,
+            isDone: data.isDone,
+            isEdit: false,
+          },
+        ];
+      });
+
+      // 完成後清空 inputValue
+      setInputValue('');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleToggleDone = (id) => {
