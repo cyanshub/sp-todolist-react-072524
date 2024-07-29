@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledFooter = styled.footer`
@@ -32,10 +33,22 @@ const StyledButton = styled.button`
 `;
 
 const Footer = ({ todos }) => {
+  // 實裝頁面跳轉 useNavigate
+  const navigate = useNavigate();
+
+  // 設計 click 登出按鈕的 handler
+  const handleClick = () => {
+    // 移除 token, 從 localStorage 去除使用者拿到的憑證
+    localStorage.removeItem('authToken');
+
+    // 登出後轉址
+    navigate('/login');
+  };
+
   return (
     <StyledFooter>
       <p>剩餘項目數： {todos.length}</p>
-      <StyledButton>登出</StyledButton>
+      <StyledButton onClick={handleClick}>登出</StyledButton>
     </StyledFooter>
   );
 };
