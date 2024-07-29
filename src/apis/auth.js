@@ -53,4 +53,20 @@ export const authController = {
       console.error('[Register Failed]:', error);
     }
   },
+  checkPermission: async (authToken) => {
+    try {
+      // 提交 authToken 給後端進行驗證
+      const res = await axios.get(`${authURL}/test-token`, {
+        // 放入 authToken 資訊
+        headers: {
+          Authorization: 'Bearer' + ' ' + authToken, // 必須加空格
+        },
+      });
+
+      // 若驗證成功, 回拿到 success: true, 可當作是否通過檢驗的依據
+      return res.data.success;
+    } catch (error) {
+      console.error('[Check Permission Failer]:', error);
+    }
+  },
 };
