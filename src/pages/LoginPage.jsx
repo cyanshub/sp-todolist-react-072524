@@ -9,6 +9,7 @@ import { AuthInput } from '@/components';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { authController } from '../apis/auth';
+import Swal from 'sweetalert2';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -20,7 +21,7 @@ const LoginPage = () => {
     if (username.length === 0) {
       return;
     }
-    
+
     if (password.length === 0) {
       return;
     }
@@ -34,7 +35,27 @@ const LoginPage = () => {
     // 設計登入成功時的行為: 呼叫 localStorage 方法, 儲存 authToken
     if (success) {
       localStorage.setItem('authToken', authToken);
+
+      // 成功提示訊息
+      Swal.fire({
+        title: '登入成功!',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1000,
+        position: 'top',
+      });
+
+      return;
     }
+
+    // 失敗提示訊息
+    Swal.fire({
+      title: '登入失敗!',
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 1000,
+      position: 'top',
+    });
   };
 
   return (
