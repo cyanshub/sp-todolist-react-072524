@@ -12,6 +12,8 @@ export const authController = {
         password,
       });
 
+      console.log("拿取後端回傳資料:", data)
+
       // 若登入成功會取得 token, 回傳成功訊息, 並夾帶後端的資料
       const { authToken } = data;
       if (authToken) {
