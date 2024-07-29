@@ -7,7 +7,7 @@ import {
 import { ACLogoIcon } from '@/assets/images';
 import { AuthInput } from '@/components';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { authController } from '../apis/auth';
 import Swal from 'sweetalert2';
 
@@ -15,6 +15,7 @@ const SignUpPage = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   // 定義 onClick 觸發的 handler
   const handleClick = async () => {
@@ -43,6 +44,8 @@ const SignUpPage = () => {
         position: 'top',
       });
 
+      // 登入成功後, 將頁面跳轉至指定位置
+      navigate('/todos')
       return;
     }
 
