@@ -6,7 +6,7 @@ import {
 } from '@/components/common/auth.styled';
 import { ACLogoIcon } from '@/assets/images';
 import { AuthInput } from '@/components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authController } from '../apis/auth';
 import Swal from 'sweetalert2';
@@ -60,6 +60,37 @@ const LoginPage = () => {
       position: 'top',
     });
   };
+
+
+  // 使用 React Hook: useEffect 工具, 其可在每次畫面渲染時, 向後端發送請求
+  useEffect(() => {
+    // 建立函數: 確認憑證是否有效
+    const checkTokenIsValid = async () => {
+      try {
+        // 從瀏覽器的 localStorage 拿取 authToken
+        const authToken = localStorage.getItem('authToken');
+
+        // 假設 token 不存在: 代表未驗證
+        if (!authToken) {
+          // 登入頁面: 直接停留在當前頁面
+          return 
+        }
+
+        // 假設 token 存在, 則呼叫 authController.checkPermission
+        const result = await authController.checkPermission(authToken);
+        
+        // 若驗證通過, 應該要導向 todos 頁面
+        if (result) {
+          navigate('/todos');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    // 執行函數: 確認憑證是否有效
+    checkTokenIsValid();
+  }, [navigate]);
 
   return (
     <AuthContainer>
