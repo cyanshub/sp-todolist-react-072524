@@ -1,13 +1,16 @@
 import { Footer, Header, TodoCollection, TodoInput } from '@/components';
 import { useEffect, useState } from 'react';
 import { todoController } from '../apis/todo';
-import { authController } from '../apis/auth';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [todos, setTodos] = useState([]);
   const navigate = useNavigate();
+
+  // 掛載 AuthContext
+  const { isAuthenticated } = useAuth();
 
   const handleChange = (value) => {
     setInputValue(value);
@@ -177,36 +180,13 @@ const TodoPage = () => {
     getTodosAsync();
   }, []);
 
-  // 使用 React Hook: useEffect 工具, 其可在每次畫面渲染時, 向後端發送請求
+  // 使用 React Hook: useEffect 工具, 其可在每次畫面渲染時觸發
   useEffect(() => {
-    // 建立函數: 確認憑證是否有效
-    const checkTokenIsValid = async () => {
-      try {
-        // 從瀏覽器的 localStorage 拿取 authToken
-        const authToken = localStorage.getItem('authToken');
-
-        // 假設 token 不存在: 代表未驗證
-        if (!authToken) {
-          // todos頁面: 導回登入頁面
-          navigate('/login');
-        }
-
-        // 假設 token 存在, 則呼叫 authController.checkPermission
-        const result = await authController.checkPermission(authToken);
-        console.log(result);
-
-        // 若驗證沒通過, 應該要導回登入頁面
-        if (!result) {
-          navigate('/login');
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    // 執行函數: 確認憑證是否有效
-    checkTokenIsValid();
-  }, [navigate]);
+    // 用 isAuthenticated 判斷身分狀態，然後根據頁面需求，導引到登入頁面
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [navigate, isAuthenticated]);
 
   return (
     <div>

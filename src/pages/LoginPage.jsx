@@ -8,35 +8,32 @@ import { ACLogoIcon } from '@/assets/images';
 import { AuthInput } from '@/components';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { authController } from '../apis/auth';
 import Swal from 'sweetalert2';
+import { useAuth } from '../contexts/AuthContext';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  // 掛載 AuthContext
+  const { isAuthenticated, login } = useAuth();
+
   // 定義 onClick 觸發的 handler
   const handleClick = async () => {
     // 驗證輸入框的輸入
-    if (username.length === 0) {
-      return;
-    }
-
-    if (password.length === 0) {
+    if (username.length === 0 || password.length === 0) {
       return;
     }
 
     // 向後端發送請求, 執行登入功能, 把輸入資訊裝在 payload 裡面, 並拿到後端回傳資料
-    const { success, authToken } = await authController.login({
+    const success = await login({
       username,
       password,
     });
 
-    // 設計登入成功時的行為: 呼叫 localStorage 方法, 儲存 authToken
+    // 設計登入成功時的行為
     if (success) {
-      localStorage.setItem('authToken', authToken);
-
       // 成功提示訊息
       Swal.fire({
         title: '登入成功!',
@@ -46,8 +43,6 @@ const LoginPage = () => {
         position: 'top',
       });
 
-      // 登入成功後, 將頁面跳轉至指定位置
-      navigate('/todos');
       return;
     }
 
@@ -61,36 +56,13 @@ const LoginPage = () => {
     });
   };
 
-
-  // 使用 React Hook: useEffect 工具, 其可在每次畫面渲染時, 向後端發送請求
+  // 使用 React Hook: useEffect 工具, 其可在每次畫面渲染時觸發
   useEffect(() => {
-    // 建立函數: 確認憑證是否有效
-    const checkTokenIsValid = async () => {
-      try {
-        // 從瀏覽器的 localStorage 拿取 authToken
-        const authToken = localStorage.getItem('authToken');
-
-        // 假設 token 不存在: 代表未驗證
-        if (!authToken) {
-          // 登入頁面: 直接停留在當前頁面
-          return 
-        }
-
-        // 假設 token 存在, 則呼叫 authController.checkPermission
-        const result = await authController.checkPermission(authToken);
-        
-        // 若驗證通過, 應該要導向 todos 頁面
-        if (result) {
-          navigate('/todos');
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    // 執行函數: 確認憑證是否有效
-    checkTokenIsValid();
-  }, [navigate]);
+    // 用 isAuthenticated 判斷身分狀態，然後根據頁面需求，導引到 /todos
+    if (isAuthenticated) {
+      navigate('/todos');
+    }
+  }, [navigate, isAuthenticated]);
 
   return (
     <AuthContainer>
