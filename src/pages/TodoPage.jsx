@@ -10,7 +10,7 @@ const TodoPage = () => {
   const navigate = useNavigate();
 
   // 掛載 AuthContext
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, currentMember } = useAuth();
 
   const handleChange = (value) => {
     setInputValue(value);
@@ -191,7 +191,7 @@ const TodoPage = () => {
   return (
     <div>
       TodoPage
-      <Header />
+      <Header username={currentMember?.name} />
       <TodoInput
         inputValue={inputValue}
         onChange={handleChange}
