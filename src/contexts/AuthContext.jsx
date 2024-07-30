@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { authController } from '../apis/auth';
 import { jwtDecode } from 'jwt-decode';
 import { useLocation } from 'react-router-dom';
@@ -14,6 +14,10 @@ const defaultAuthContext = {
 
 // 參照defaultAuthContext, 用 createContext 方法建立 Context 元件
 const AuthContext = createContext(defaultAuthContext);
+
+// 用 export 匯出要讓外部元件取用的內容
+// 自行封裝一個 useAuth，用函式回傳 useContext(AuthContext)
+export const useAuth = () => useContext(AuthContext);
 
 // 建立 Provider, 用來管理與 Context 元件有關狀態的操作
 export const AuthProvider = ({ children }) => {
