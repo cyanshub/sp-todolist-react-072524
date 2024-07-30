@@ -1,6 +1,7 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { authController } from '../apis/auth';
 import { jwtDecode } from 'jwt-decode';
+import { useLocation } from 'react-router-dom';
 
 // 定義想共享的狀態與方法之預設值
 const defaultAuthContext = {
@@ -19,6 +20,47 @@ export const AuthProvider = ({ children }) => {
   // 定義狀態
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [payload, setPayload] = useState(null);
+
+  // 取得瀏覽器網址列中的路徑資訊(可以是否變化當作觸發 useEffect 依據)
+  const { pathname } = useLocation();
+
+  // 使用 React Hook: useEffect 工具, 其可在每次畫面渲染時, 向後端發送請求
+  useEffect(() => {
+    // 建立函數: 確認憑證是否有效
+    const checkTokenIsValid = async () => {
+      try {
+        // 從瀏覽器的 localStorage 拿取 authToken
+        const authToken = localStorage.getItem('authToken');
+
+        // 假設 token 不存在: 代表未驗證
+        if (!authToken) {
+          setIsAuthenticated(false);
+          setPayload(null);
+          return;
+        }
+
+        // 假設 token 存在, 則呼叫 authController.checkPermission
+        const result = await authController.checkPermission(authToken);
+
+        // 若驗證通過
+        if (result) {
+          setIsAuthenticated(true);
+
+          // 若驗證通過, 代表可以從 authToken 解析出 payload
+          const tempPayload = jwtDecode(authToken);
+          setPayload(tempPayload);
+        } else {
+          setIsAuthenticated(false);
+          setPayload(null);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    // 執行函數: 確認憑證是否有效
+    checkTokenIsValid();
+  }, [pathname]);
 
   return (
     <AuthContext.Provider
