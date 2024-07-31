@@ -6,18 +6,18 @@ import {
 } from '@/components/common/auth.styled';
 import { ACLogoIcon } from '@/assets/images';
 import { AuthInput } from '@/components';
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useAuth } from '../contexts/AuthContext';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  
 
   // 掛載 AuthContext
-  const { isAuthenticated, login } = useAuth();
+  const { login } = useAuth();
 
   // 定義 onClick 觸發的 handler
   const handleClick = async () => {
@@ -55,14 +55,6 @@ const LoginPage = () => {
       position: 'top',
     });
   };
-
-  // 使用 React Hook: useEffect 工具, 其可在每次畫面渲染時觸發
-  useEffect(() => {
-    // 用 isAuthenticated 判斷身分狀態，然後根據頁面需求，導引到 /todos
-    if (isAuthenticated) {
-      navigate('/todos');
-    }
-  }, [navigate, isAuthenticated]);
 
   return (
     <AuthContainer>

@@ -22,7 +22,7 @@ export const useAuth = () => useContext(AuthContext);
 // 建立 Provider, 用來管理與 Context 元件有關狀態的操作
 export const AuthProvider = ({ children }) => {
   // 定義狀態
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [payload, setPayload] = useState(null);
 
   // 取得瀏覽器網址列中的路徑資訊(可以是否變化當作觸發 useEffect 依據)

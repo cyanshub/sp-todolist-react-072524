@@ -1,16 +1,14 @@
 import { Footer, Header, TodoCollection, TodoInput } from '@/components';
 import { useEffect, useState } from 'react';
 import { todoController } from '../apis/todo-controller';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [todos, setTodos] = useState([]);
-  const navigate = useNavigate();
 
   // 掛載 AuthContext
-  const { isAuthenticated, currentMember } = useAuth();
+  const { currentMember } = useAuth();
 
   const handleChange = (value) => {
     setInputValue(value);
@@ -179,14 +177,6 @@ const TodoPage = () => {
     // 執行 async/await 方法
     getTodosAsync();
   }, []);
-
-  // 使用 React Hook: useEffect 工具, 其可在每次畫面渲染時觸發
-  useEffect(() => {
-    // 用 isAuthenticated 判斷身分狀態，然後根據頁面需求，導引到登入頁面
-    if (!isAuthenticated) {
-      navigate('/login');
-    }
-  }, [navigate, isAuthenticated]);
 
   return (
     <div>
