@@ -1,6 +1,6 @@
 import { Footer, Header, TodoCollection, TodoInput } from '@/components';
 import { useEffect, useState } from 'react';
-import { todoController } from '../apis/todo';
+import { todoController } from '../apis/todo-controller';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 

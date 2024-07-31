@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { authController } from '../apis/auth';
+import { authController } from '../apis/auth-controller';
 import { jwtDecode } from 'jwt-decode';
 import { useLocation } from 'react-router-dom';
 
