@@ -1,15 +1,15 @@
+import { ACLogoIcon } from '@/assets/images';
 import {
   AuthContainer,
   AuthInputContainer,
   AuthButton,
   AuthLinkText,
-} from '@/components/common/auth.styled';
-import { ACLogoIcon } from '@/assets/images';
+} from '@/components/commons/auth.styled';
 import { AuthInput } from '@/components';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import { useAuth } from '../contexts/AuthContext';
+import { handleClick } from '../handlers/SignUpPageHandlers';
 
 const SignUpPage = () => {
   const [username, setUsername] = useState('');
@@ -19,43 +19,8 @@ const SignUpPage = () => {
   // 掛載 AuthContext
   const { register } = useAuth();
 
-  // 定義 onClick 觸發的 handler
-  const handleClick = async () => {
-    // 驗證輸入框的輸入
-    if (username.length === 0 || email.length === 0 || password.length === 0) {
-      return;
-    }
-
-    // 向後端發送請求, 執行登入功能, 把輸入資訊裝在 payload 裡面, 並拿到後端回傳資料
-    const success = await register({
-      username,
-      email,
-      password,
-    });
-
-    // 設計登入成功時的行為
-    if (success) {
-      // 成功提示訊息
-      Swal.fire({
-        title: '註冊成功!',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1000,
-        position: 'top',
-      });
-
-      return;
-    }
-
-    // 失敗提示訊息
-    Swal.fire({
-      title: '註冊失敗!',
-      icon: 'error',
-      showConfirmButton: false,
-      timer: 1000,
-      position: 'top',
-    });
-  };
+  // 掛載 handlers: 定義 onClick 觸發的 handler
+  const onClick = () => handleClick(username, email, password, register);
 
   return (
     <AuthContainer>
@@ -97,7 +62,7 @@ const SignUpPage = () => {
           }}
         />
       </AuthInputContainer>
-      <AuthButton onClick={handleClick}>註冊</AuthButton>
+      <AuthButton onClick={onClick}>註冊</AuthButton>
 
       <Link to="/login">
         <AuthLinkText>取消</AuthLinkText>

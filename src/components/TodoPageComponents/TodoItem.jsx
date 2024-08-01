@@ -136,6 +136,7 @@ const TodoItem = ({ todo, onToggleDone, onSave, onDelete, onChangeMode }) => {
       >
         <span className="task-item-body-text">{todo.title}</span>
         <input
+          id={todo.id}
           ref={inputRef}
           className="task-item-body-input"
           defaultValue={todo.title}

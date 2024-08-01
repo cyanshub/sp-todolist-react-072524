@@ -2,10 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.scss';
 import { TodoPage, LoginPage, SignUpPage, HomePage } from './pages';
 import { AuthProvider } from './contexts/AuthContext';
-import {
-  Authenticated,
-  LoginAuthenticated,
-} from './components/middlewares/Auth';
+import { Authenticated, LoginAuthenticated } from './middlewares/Auth';
 
 function App() {
   return (
