@@ -8,7 +8,7 @@ import { AuthInput } from '@/components';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { handleClick } from '../handlers/SignUpPageHandlers';
+import { handleClick, handleKeyDown } from '../handlers/SignUpPageHandlers';
 import { ReactLogoIcon } from '../assets/images';
 
 const SignUpPage = () => {
@@ -21,9 +21,16 @@ const SignUpPage = () => {
 
   // 掛載 handlers: 定義 onClick 觸發的 handler
   const onClick = () => handleClick(username, email, password, register);
+  const onKeyDown = () => handleKeyDown(username, email, password, register);
 
   return (
-    <AuthContainer>
+    <AuthContainer
+      onKeyDown={(event) => {
+        if (event.key === 'Enter') {
+          onKeyDown();
+        }
+      }}
+    >
       <div>
         <ReactLogoIcon />
       </div>
