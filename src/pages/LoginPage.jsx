@@ -37,7 +37,7 @@ const LoginPage = () => {
 
       <AuthInputContainer>
         <AuthInput
-          label="帳號"
+          label="帳號: "
           placeholder="請輸入帳號"
           value={username}
           onChange={(nameInputValue) => setUsername(nameInputValue)}
@@ -46,7 +46,7 @@ const LoginPage = () => {
 
       <AuthInputContainer>
         <AuthInput
-          label="密碼"
+          label="密碼: "
           placeholder="請輸入密碼"
           type="password"
           value={password}
