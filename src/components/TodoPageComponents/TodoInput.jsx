@@ -1,6 +1,35 @@
 import styled from 'styled-components';
 import clsx from 'clsx';
 
+const TodoInput = ({ inputValue, onChange, onKeyDown, onAddTodo }) => {
+  return (
+    <StyledAddTodoContainer className={clsx('', { active: inputValue.length > 0 })}>
+      <StyledLabelIcon className="icon" htmlFor="add-todo-input" />
+      <StyledInputContainer>
+        <input
+          id="add-todo-input"
+          type="text"
+          placeholder="新增工作"
+          value={inputValue}
+          onChange={(event) => {
+            onChange?.(event.target.value);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              onKeyDown?.();
+            }
+          }}
+        />
+      </StyledInputContainer>
+      <StyledAddTodoActionContainer className={clsx('', { active: inputValue.length > 0 })}>
+        <button className="btn-reset" onClick={() => onAddTodo?.()}>
+          新增
+        </button>
+      </StyledAddTodoActionContainer>
+    </StyledAddTodoContainer>
+  );
+};
+
 const StyledAddTodoContainer = styled.div`
   min-height: 52px;
   display: flex;
@@ -68,37 +97,5 @@ const StyledAddTodoActionContainer = styled.div`
     }
   }
 `;
-const TodoInput = ({ inputValue, onChange, onKeyDown, onAddTodo }) => {
-  return (
-    <StyledAddTodoContainer
-      className={clsx('', { active: inputValue.length > 0 })}
-    >
-      <StyledLabelIcon className="icon" htmlFor="add-todo-input" />
-      <StyledInputContainer>
-        <input
-          id="add-todo-input"
-          type="text"
-          placeholder="新增工作"
-          value={inputValue}
-          onChange={(event) => {
-            onChange?.(event.target.value);
-          }}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              onKeyDown?.();
-            }
-          }}
-        />
-      </StyledInputContainer>
-      <StyledAddTodoActionContainer
-        className={clsx('', { active: inputValue.length > 0 })}
-      >
-        <button className="btn-reset" onClick={() => onAddTodo?.()}>
-          新增
-        </button>
-      </StyledAddTodoActionContainer>
-    </StyledAddTodoContainer>
-  );
-};
 
 export default TodoInput;

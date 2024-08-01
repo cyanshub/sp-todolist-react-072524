@@ -1,5 +1,22 @@
 import styled from 'styled-components';
 
+const AuthInput = ({ type, label, value, placeholder, onChange }) => {
+  return (
+    <StyledContainer>
+      <StyledLabel>
+        {label}
+        <StyledInput
+          id={Math.random()}
+          type={type || 'text'}
+          value={value}
+          placeholder={placeholder}
+          onChange={(event) => onChange?.(event.target.value)}
+        />
+      </StyledLabel>
+    </StyledContainer>
+  );
+};
+
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -21,22 +38,5 @@ const StyledInput = styled.input`
   background-color: #f5f8fa;
   border-radius: 0px;
 `;
-
-const AuthInput = ({ type, label, value, placeholder, onChange }) => {
-  return (
-    <StyledContainer>
-      <StyledLabel>
-        {label}
-        <StyledInput
-          id={Math.random()}
-          type={type || 'text'}
-          value={value}
-          placeholder={placeholder}
-          onChange={(event) => onChange?.(event.target.value)}
-        />
-      </StyledLabel>
-    </StyledContainer>
-  );
-};
 
 export default AuthInput;

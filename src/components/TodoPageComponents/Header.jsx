@@ -1,5 +1,16 @@
 import styled from 'styled-components';
 
+const Header = ({ username }) => {
+  return (
+    <StyledHeader>
+      <h3>Tasks</h3>
+      <StyledGreetingText>
+        Hi! <span>{username}</span>
+      </StyledGreetingText>
+    </StyledHeader>
+  );
+};
+
 const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
@@ -20,16 +31,5 @@ const StyledGreetingText = styled.div`
     color: var(--major);
   }
 `;
-
-const Header = ( {username} ) => {
-  return (
-    <StyledHeader>
-      <h3>Tasks</h3>
-      <StyledGreetingText>
-        Hi! <span>{username}</span>
-      </StyledGreetingText>
-    </StyledHeader>
-  );
-};
 
 export default Header;

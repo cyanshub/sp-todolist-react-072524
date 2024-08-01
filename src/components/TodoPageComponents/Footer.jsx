@@ -1,6 +1,23 @@
 import styled from 'styled-components';
 import { useAuth } from '../../contexts/AuthContext';
 
+const Footer = ({ todos }) => {
+  // 掛載 AuthContext, 取出登出功能
+  const { logout } = useAuth();
+
+  // 設計 click 登出按鈕的 handler
+  const handleClick = () => {
+    logout();
+  };
+
+  return (
+    <StyledFooter>
+      <p>剩餘項目數： {todos.length}</p>
+      <StyledButton onClick={handleClick}>登出</StyledButton>
+    </StyledFooter>
+  );
+};
+
 const StyledFooter = styled.footer`
   display: flex;
   justify-content: space-between;
@@ -31,22 +48,5 @@ const StyledButton = styled.button`
     text-decoration: underline;
   }
 `;
-
-const Footer = ({ todos }) => {
-  // 掛載 AuthContext, 取出登出功能
-  const { logout } = useAuth();
-
-  // 設計 click 登出按鈕的 handler
-  const handleClick = () => {
-    logout();
-  };
-
-  return (
-    <StyledFooter>
-      <p>剩餘項目數： {todos.length}</p>
-      <StyledButton onClick={handleClick}>登出</StyledButton>
-    </StyledFooter>
-  );
-};
 
 export default Footer;

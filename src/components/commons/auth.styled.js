@@ -26,7 +26,7 @@ const StyledButton = styled.button`
   padding: 6px 0;
   margin: 2rem 0;
 
-  &.hover {
+  &:hover {
     cursor: pointer;
   }
 `;
