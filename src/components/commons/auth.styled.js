@@ -16,7 +16,7 @@ const StyledAuthInputContainer = styled.div`
 
 const StyledButton = styled.button`
   border-radius: 30px;
-  background-color: #ff6600;
+  background-color: var(--major);
   border: none;
 
   color: white;
@@ -32,7 +32,7 @@ const StyledButton = styled.button`
 `;
 
 const StyledLinkText = styled.div`
-  color: #0062ff;
+  color: var(--major);
   font-size: 16px;
   font-weight: 400;
 `;

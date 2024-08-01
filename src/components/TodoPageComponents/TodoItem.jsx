@@ -81,8 +81,9 @@ const StyledTaskItem = styled.div`
   }
 
   &:hover {
-    background: #fff3eb;
-    box-shadow: inset 0 0 0 1px #fff3eb;
+    background: var(--sub-major);
+    box-shadow: inset 0 0 0 1px var(--sub-major);
+    cursor: pointer;
 
     .task-item-action .btn-destroy {
       display: inline-flex;

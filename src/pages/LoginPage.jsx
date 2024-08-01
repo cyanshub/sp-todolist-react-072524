@@ -1,4 +1,3 @@
-import { ACLogoIcon } from '@/assets/images';
 import {
   AuthContainer,
   AuthInputContainer,
@@ -10,6 +9,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { handleClick } from '../handlers/LoginPageHandlers';
+import { ReactLogoIcon } from '../assets/images';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -20,14 +20,13 @@ const LoginPage = () => {
 
   // 掛載 handlers: 定義 onClick 觸發的 handler
   const onClick = () => handleClick(username, password, login);
-  
 
   return (
     <AuthContainer>
       <div>
-        <ACLogoIcon />
+        <ReactLogoIcon />
       </div>
-      <h1>登入 Todo</h1>
+      <h1>React Todo List</h1>
 
       <AuthInputContainer>
         <AuthInput

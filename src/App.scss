@@ -1,12 +1,18 @@
 :root {
-  --major: #ff6600;
+  --major: #5588a8;
   --gray: #767678;
+  --major-test1: #ff6600;
+  --sub-major: #ebedff;
 }
 
 html,
 body {
   background-color: #f4f4f4;
   font-family: 'Lato', 'Noto Sans TC', sans-serif;
+}
+
+a {
+  text-decoration: none;
 }
 
 .app {

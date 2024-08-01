@@ -1,4 +1,3 @@
-import { ACLogoIcon } from '@/assets/images';
 import {
   AuthContainer,
   AuthInputContainer,
@@ -10,6 +9,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { handleClick } from '../handlers/SignUpPageHandlers';
+import { ReactLogoIcon } from '../assets/images';
 
 const SignUpPage = () => {
   const [username, setUsername] = useState('');
@@ -25,7 +25,7 @@ const SignUpPage = () => {
   return (
     <AuthContainer>
       <div>
-        <ACLogoIcon />
+        <ReactLogoIcon />
       </div>
       <h1>建立您的帳號</h1>
 
