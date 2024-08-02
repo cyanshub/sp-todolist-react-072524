@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { handleClick, handleKeyDown } from '../handlers/LoginPageHandlers';
-import { ReactLogoIcon } from '../assets/images';
+import { ReactLogoIcon } from '../../public/images';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');

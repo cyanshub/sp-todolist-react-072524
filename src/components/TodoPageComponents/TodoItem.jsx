@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { CheckActiveIcon, CheckCircleIcon, CheckHoverIcon } from '@/assets/images';
 import { useRef } from 'react';
 
 // todo.isEdit
@@ -54,6 +53,9 @@ const TodoItem = ({ todo, onToggleDone, onSave, onDelete, onChangeMode }) => {
   );
 };
 
+// 定義靜態檔案位置
+const publicURL = '/sp-todolist-react-072524';
+
 const StyledTaskItem = styled.div`
   min-height: 52px;
   display: flex;
@@ -97,7 +99,7 @@ const StyledTaskItem = styled.div`
     }
 
     .icon-checked {
-      background-image: url(${CheckActiveIcon});
+      background-image: url('${publicURL}/images/check-active.svg');
     }
   }
 
@@ -139,13 +141,13 @@ const StyledTaskItem = styled.div`
   }
 
   .icon-checked {
-    background-image: url(${CheckCircleIcon});
+    background-image: url('${publicURL}/images/check-circle.svg');
     background-position: center;
     background-repeat: no-repeat;
 
     &:hover {
       transition: background-image 0.5s;
-      background-image: url(${CheckHoverIcon});
+      background-image: url(${publicURL}/images/check-hover.svg');
     }
   }
 `;
